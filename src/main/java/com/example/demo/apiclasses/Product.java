@@ -18,6 +18,7 @@ public class Product {
     byte[] image;
     byte[] imagePreview;
     String Model;
+    String category;
 
 
     public String addProduct(){
@@ -26,16 +27,17 @@ public class Product {
         String jsonString ="";
 
         String status = "adding failed";
-        if (name != null && !name.isEmpty() && price != null && image != null && imagePreview != null && Model != null && !Model.isEmpty()) {
+        if (name != null && !name.isEmpty() && price != null && image != null && imagePreview != null && Model != null && !Model.isEmpty() &&category!= null && !category.isEmpty()) {
             Connection connection = DatabaseConnection.getConnection();
             try {
-                String sqlQuery = "INSERT INTO katalog (name, price, image, imagePreview, Model) VALUES (?, ?, ?, ?, ?)";
+                String sqlQuery = "INSERT INTO katalog (name, price, image, imagePreview, Model, category) VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
                 preparedStatement.setString(1, name);
                 preparedStatement.setInt(2, price);
                 preparedStatement.setBytes(3, image);
                 preparedStatement.setBytes(4, imagePreview);
                 preparedStatement.setString(5, Model);
+                preparedStatement.setString(6,category);
                 preparedStatement.executeUpdate();
                 status = "adding complete";
 

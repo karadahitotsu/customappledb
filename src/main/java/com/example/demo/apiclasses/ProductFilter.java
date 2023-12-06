@@ -13,6 +13,7 @@ import java.sql.Statement;
 
 public class ProductFilter {
     String[] filters;
+    String category;
 
     public String[] getFilters() {
         return filters;
@@ -21,6 +22,15 @@ public class ProductFilter {
     public void setFilters(String[] filters) {
         this.filters = filters;
     }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getProducts(){
         String jsonString = "";
         ObjectMapper objectMapper = new ObjectMapper();
@@ -38,6 +48,14 @@ public class ProductFilter {
                 }
             }
             whereClause.append(")");
+        }
+        if (category != null && !category.isEmpty()) {
+            if (whereClause.length() > 0) {
+                whereClause.append(" AND");
+            } else {
+                whereClause.append(" WHERE");
+            }
+            whereClause.append(" сategory = '" + category + "'");
         }
         Connection connection = DatabaseConnection.getConnection();
         try{
