@@ -41,7 +41,14 @@ public class RestComtroller {
     public String getProducts(@RequestParam(required = false) String[] filters,@RequestParam(required = false) String category){
         ProductFilter productFilter = new ProductFilter();
         productFilter.setFilters(filters);
+        productFilter.setCategory(category);
         return productFilter.getProducts();
+    }
+    @GetMapping("/cartproducts")
+    public String getCartProducts(@RequestParam(required = true) int[] id){
+        CartProducts cartProducts = new CartProducts();
+        cartProducts.setIds(id);
+        return cartProducts.getProducts();
     }
     @PostMapping("/registration")
     public String registration(@RequestParam String login,

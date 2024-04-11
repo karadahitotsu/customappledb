@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,9 +67,18 @@ public class AddCart {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
-            int[] productsArray = (int[]) resultSet.getArray("productsid").getArray();
-            for (int prodId : productsArray) {
-                currentProducts.add(prodId);
+            Array productsArray = resultSet.getArray("productsid");
+            if (productsArray != null) {
+                Integer[] array = (Integer[]) productsArray.getArray();
+                if (array != null) {
+                    for (Integer prodId : array) {
+                        currentProducts.add(prodId);
+                    }
+                } else {
+                    // Обработка ситуации, когда массив данных пустой
+                }
+            } else {
+                // Обработка ситуации, когда значение столбца равно null
             }
         }
 

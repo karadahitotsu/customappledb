@@ -32,6 +32,7 @@ public class Registration {
     }
     public String regist() {
         ObjectMapper objectMapper = new ObjectMapper();
+
         ObjectNode rootNode = objectMapper.createObjectNode();
         String jsonString = "";
         String status = "adding failed";
@@ -48,7 +49,7 @@ public class Registration {
                 if (generatedKeys.next()) {
                     int userId = generatedKeys.getInt(1);
 
-                    String insertCartQuery = "INSERT INTO cart (userid, productsid) VALUES (?, ?)";
+                    String insertCartQuery = "INSERT INTO cart (userid) VALUES (?)";
                     PreparedStatement cartStatement = connection.prepareStatement(insertCartQuery);
                     cartStatement.setInt(1, userId);
                     // Вставьте массив продуктов или оставьте пустым, так как он не инициализирован в вашем коде

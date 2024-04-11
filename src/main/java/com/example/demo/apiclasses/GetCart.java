@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class GetCart {
     int userId;
@@ -39,11 +36,16 @@ public class GetCart {
 
             while (resultSet.next()) {
                 // Получаем массив товаров пользователя по его ID
-                int[] productsArray = (int[]) resultSet.getArray("productsid").getArray();
-
-                for (int productId : productsArray) {
-                    itemsArray.add(productId);
+                Array productsArray = resultSet.getArray("productsid");
+                if(productsArray!=null){
+                    Integer[] array = (Integer[])productsArray.getArray();
+                    if(array!=null){
+                        for(Integer productId:array){
+                            itemsArray.add(productId);
+                        }
+                    }
                 }
+
             }
 
             rootNode.set("items", itemsArray);

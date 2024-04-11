@@ -55,12 +55,14 @@ public class ProductFilter {
             } else {
                 whereClause.append(" WHERE");
             }
-            whereClause.append(" сategory = '" + category + "'");
+            whereClause.append(" category = '" + category + "'");
         }
         Connection connection = DatabaseConnection.getConnection();
+
         try{
             Statement statement = connection.createStatement();
             String sqlQuery = "SELECT * FROM katalog" + whereClause.toString();
+
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
                 count++;
